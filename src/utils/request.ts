@@ -18,7 +18,7 @@ service.interceptors.request.use(config => {
 
 service.interceptors.response.use(response => {
   const { data } = response
-  if (data.status !== 1) {
+  if (data.code !== 200) {
     message.error(data.msg)
     return Promise.reject(new Error(data.msg || 'Error'))
   } else {

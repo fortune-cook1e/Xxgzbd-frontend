@@ -9,3 +9,4 @@ export function getCityTotalData() {
     method: 'get'
   })
 }
+

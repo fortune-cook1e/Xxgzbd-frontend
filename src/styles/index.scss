@@ -4,7 +4,10 @@
   box-sizing: border-box;
 }
 
+
 #app {
+  max-width: 1000px;
+  margin:0 auto;
   .content {
     padding: 0 1rem;
   }

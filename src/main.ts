@@ -6,6 +6,7 @@ import './plugins/ant-design-vue.js'
 import 'babel-polyfill'
 import 'normalize.css'
 import './styles/index.scss'
+import './permission.ts'
 
 Vue.config.productionTip = false
 

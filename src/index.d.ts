@@ -21,3 +21,5 @@ declare module 'dayjs' {
   export default dayjs
 }
 
+declare module 'file-saver'
+declare module 'nprogress'
