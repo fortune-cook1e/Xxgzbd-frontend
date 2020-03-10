@@ -79,24 +79,11 @@ interface Form {
 }
 @Component
 export default class AddGoods extends Vue {
-  // form: Form = {
-  //   name: '',
-  //   foodType: [],
-  //   foodInfo: '',
-  //   time: dayjs().format('YYYY-MM-DD'),
-  //   phone: '',
-  //   area: ''
-  // }
-
-  // form = this.$form.createForm(this)
+  form = this.$form.createForm(this)
 
   private beforeCreate() {
     // form必须在boforeCreate 创建 表单验证提示才能生效
-    this.form = this.$form.createForm(this)
-  }
-
-  private created() {
-    console.log(this.form)
+    // this.form = this.$form.createForm(this)
   }
 
   private resetForm() {
@@ -108,7 +95,6 @@ export default class AddGoods extends Vue {
     try {
       this.form.validateFields(async(err:any, values:any) => {
         if (!err) {
-          console.log(values)
           const form = Object.assign({}, values, { time: dayjs().format('YYYY-MM-DD') })
           await addGoods(form)
           message.success('提交成功')

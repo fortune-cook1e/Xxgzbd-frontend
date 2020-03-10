@@ -66,17 +66,13 @@ interface TotalItem {
 @Component
 export default class Total extends Vue {
   @Prop({ default: () => [] }) private totalItem!: TotalItem
-
-  time: string = dayjs().format('YYYY-MM-DD hh:mm:ss')
-
-  private created(): void {
-    console.log(this.time)
-  }
+  private time: string = dayjs().format('YYYY-MM-DD hh:mm:ss')
 }
 </script>
 
 <style lang="scss">
   .total {
+    padding: 0 1rem;
     .total-content {
       .total-time {
         color: #666;

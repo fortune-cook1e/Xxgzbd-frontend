@@ -1,22 +1,46 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import App from '../App.vue'
-
+import VueRouter, { RouteConfig } from 'vue-router'
 Vue.use(VueRouter)
 
-const routes = [
+export const routes:RouteConfig[] = [
   {
     path: '/',
-    name: 'Home',
+    redirect: '/login'
+  },
+  {
+    path: '/home',
+    name: 'home',
     meta: {
-      title: '3B 3片区'
+      title: '主页'
     },
-    component: App
+    component: () => import('@/views/home/index.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    meta: {
+      title: '登录'
+    },
+    component: () => import('@/views/login/index.vue')
   }
 ]
 
-const router = new VueRouter({
+const createRouter = () => new VueRouter({
+  scrollBehavior: (to, from, savedPosition) => {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
   routes
 })
+
+const router = createRouter()
+
+export function resetRouter() {
+  const newRouter = createRouter();
+  (router as any).matcher = (newRouter as any).matcher // reset router
+}
 
 export default router

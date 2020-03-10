@@ -19,6 +19,17 @@ module.exports = {
     port: port,
     open: true
   },
+  css: {
+    loaderOptions: {
+      // 配置全局scss 颜色变量
+      scss: {
+        // 老的 sass-loader 是 data：
+        prependData: `
+          @import "@/styles/color.scss";
+        `
+      }
+    }
+  },
   configureWebpack: config => {
 
   },
