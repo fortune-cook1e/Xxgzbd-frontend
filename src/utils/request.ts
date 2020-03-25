@@ -1,5 +1,7 @@
 import { message } from 'ant-design-vue'
 import axios from 'axios'
+import { getToken } from './cookie'
+import router from '@/router'
 
 const baseUrl = process.env.VUE_APP_BASE_URL
 
@@ -8,7 +10,13 @@ const service = axios.create({
   timeout: 3000
 })
 
+const token = getToken()
+
 service.interceptors.request.use(config => {
+  // 登录之后会返回一个token 并且将token加在headers里面
+  if (token) {
+    config.headers.authorization = 'Bearer ' + token
+  }
   return config
 }, (error: any) => {
   message.error(error)
@@ -20,6 +28,11 @@ service.interceptors.response.use(response => {
   const { data } = response
   if (data.code !== 200) {
     message.error(data.msg)
+    if (data.code === 401) {
+      router.push({
+        name: 'login'
+      })
+    }
     return Promise.reject(new Error(data.msg || 'Error'))
   } else {
     return data
@@ -31,4 +44,3 @@ service.interceptors.response.use(response => {
 })
 
 export default service
-

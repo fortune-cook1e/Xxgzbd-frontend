@@ -1,71 +1,79 @@
 <template>
   <div class="login">
-    <div class="login-content">
-      <div class="login-content-top">
-        <p>
-          <a-icon type="desktop" />
-          荆州新型冠状病毒管理系统
-        </p>
+    <a-spin :spinning="loading">
+      <div class="login-content">
+        <div class="login-content-top">
+          <p>
+            <a-icon type="desktop" />
+            荆州新型冠状病毒管理系统
+          </p>
+        </div>
+        <div class="login-content-main">
+          <h3 class="login-title">
+            账号密码登录
+          </h3>
+          <a-form>
+            <a-form-item>
+              <a-input
+                v-model="form.username"
+                placeholder="Username"
+              >
+                <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+              </a-input>
+            </a-form-item>
+            <a-form-item>
+              <a-input
+                v-model="form.password"
+                type="password"
+                placeholder="Password"
+              >
+                <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
+              </a-input>
+            </a-form-item>
+            <a-form-item>
+              <a-row type="flex" justify="space-between">
+                <a-col :span="8">
+                  <a-button type="primary" class="form-btn" @click="login">Login</a-button>
+                </a-col>
+                <a-col :span="8">
+                  <a-button type="default" class="form-btn" @click="signUp">Sign In</a-button>
+                </a-col>
+              </a-row>
+            </a-form-item>
+          </a-form>
+        </div>
       </div>
-      <div class="login-content-main">
-        <h3 class="login-title">
-          账号密码登录
-        </h3>
-        <a-form
-          :form="loginForm"
-        >
-          <a-form-item>
-            <a-input
-              v-decorator="[
-                'userName',
-                { rules: [{ required: true, message: 'Please input your username!' }] },
-              ]"
-              placeholder="Username"
-            >
-              <a-icon slot="prefix" style="color:#40a9ff" type="user" />
-            </a-input>
-          </a-form-item>
-          <a-form-item>
-            <a-input
-              v-decorator="[
-                'password',
-                { rules: [{ required: true, message: 'Please input your Password!' }] },
-              ]"
-              type="password"
-              placeholder="Password"
-            >
-              <a-icon slot="prefix" style="color:#40a9ff" type="lock" />
-            </a-input>
-          </a-form-item>
-          <a-form-item>
-            <div class="login-btns">
-              <a-button type="primary" class="login-form-button" @click="login">
-                Log in
-              </a-button>
-              <a-button class="login-form-button" @click="signUp">
-                Sign Up
-              </a-button>
-            </div>
-          </a-form-item>
-        </a-form>
-      </div>
-    </div>
+    </a-spin>
   </div>
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
+import { UserModule } from '@/store/modules/user.ts'
+import { LoginModel } from '@/models/paramsModels.ts'
+import { message } from 'ant-design-vue'
 @Component({})
 export default class Login extends Vue {
-  // data
-  private loginForm = this.$form.createForm(this)
-
-  // methods
-  private login():void {
-
+  private form: LoginModel = {
+    username: '',
+    password: ''
   }
 
-  private signUp():void {
+  private loading: boolean = false
+
+  // methods
+  private async login(e: any) {
+    try {
+      await UserModule.login(this.form)
+      this.$router.push({
+        name: 'home'
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  private async signUp() {
 
   }
 }
@@ -91,13 +99,8 @@ export default class Login extends Vue {
           text-align: center;
           margin-bottom: 1rem;
         }
-        .login-btns {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          .login-form-button {
-            width: 40%;
-          }
+        .form-btn {
+          width: 100%;
         }
       }
     }

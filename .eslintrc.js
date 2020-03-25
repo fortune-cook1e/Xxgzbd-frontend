@@ -1,16 +1,16 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    browser: true,
+    node: true,
+    es6: true
   },
-  extends: [
+  'extends': [
+    'eslint:recommended',
     'plugin:vue/recommended',
     '@vue/standard',
-    '@vue/typescript'
+    '@vue/typescript',
   ],
-  parserOptions: {
-    ecmaVersion: 2020
-  },
   rules: {
     '@typescript-eslint/no-var-requires': 0, // 解决引入图片eslint报错问题
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -143,10 +143,11 @@ module.exports = {
     }],
     'no-unreachable': 2,
     'no-unsafe-finally': 2,
-    // 'no-unused-vars': [2, {
-    //   'vars': 'all',
-    //   'args': 'none'
-    // }],
+    // 关闭这个 import 不报问题
+    'no-unused-vars': [0, {
+      'vars': 'all',
+      'args': 'none'
+    }],
     'no-useless-call': 2,
     'no-useless-computed-key': 2,
     'no-useless-constructor': 2,
@@ -195,5 +196,19 @@ module.exports = {
       objectsInObjects: false
     }],
     'array-bracket-spacing': [2, 'never']
-  }
+  },
+  parserOptions: {
+    // parser: '@typescript-eslint/parser'
+  },
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        jest: true
+      }
+    }
+  ]
 }

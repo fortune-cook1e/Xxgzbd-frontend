@@ -1518,10 +1518,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-ant-design-vue@^1.2.4:
-  version "1.4.11"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.4.11.tgz?cache=0&sync_timestamp=1581482848048&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fant-design-vue%2Fdownload%2Fant-design-vue-1.4.11.tgz#a1a277c164301182b2d472ab5900054b85d6cbb8"
-  integrity sha1-oaJ3wWQwEYKy1HKrWQAFS4XWy7g=
+ant-design-vue@^1.4.12:
+  version "1.4.12"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-1.4.12.tgz#61a9d28c54b19545d34b3680834bec5a481b4398"
+  integrity sha512-m+hWKF208DN8XX4s4BHCnh+XlUhJy8FUs13a9+jtZCoiQB2zpZdafJeu1LEcFaFlK7fxXfp61fWJJJm0S6ek0g==
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
@@ -3226,9 +3226,9 @@ doctrine@^3.0.0:
     esutils "^2.0.2"
 
 dom-align@^1.7.0:
-  version "1.10.4"
-  resolved "https://registry.npm.taobao.org/dom-align/download/dom-align-1.10.4.tgz?cache=0&sync_timestamp=1578476333238&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdom-align%2Fdownload%2Fdom-align-1.10.4.tgz#862ae4de0d11d6495c1c8ee1b195427e7caa727d"
-  integrity sha1-hirk3g0R1klcHI7hsZVCfnyqcn0=
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.11.1.tgz#7592be99a660a36cdedc1d6eeb22b8109d758cae"
+  integrity sha512-hN42DmUgtweBx0iBjDLO4WtKOMcK8yBmPx/fgdsgQadLuzPu/8co3oLdK5yMmeM/vnUd3yDyV6qV8/NzxBexQg==
 
 dom-closest@^0.2.0:
   version "0.2.0"
@@ -5260,6 +5260,11 @@ jest-worker@^25.1.0:
   dependencies:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
+
+js-cookie@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
+  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
 
 js-message@1.0.5:
   version "1.0.5"
@@ -8987,6 +8992,11 @@ vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.11.tgz?cache=0&sync_timestamp=1582057137855&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha1-dllNh31LEiNEBuhONSdcbVFBJcU=
+
+vuex-module-decorators@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/vuex-module-decorators/-/vuex-module-decorators-0.16.1.tgz#9e651d507057b07a1b52f0f65dfae97b9095f00f"
+  integrity sha512-Zz8HF2rMoDYf78uOBbWCq8wGFFo7YyNWc10Yj2eScKxVoRMla9HnFpiqvI3Dm0cLyOnBBklCn1AFUys62BZGAw==
 
 vuex@^3.1.2:
   version "3.1.2"

@@ -12,7 +12,9 @@ import {
   Select,
   DatePicker,
   Alert,
-  Icon
+  Icon,
+  Spin,
+  message
 } from 'ant-design-vue'
 
 Vue.component(LocaleProvider.name, LocaleProvider)
@@ -36,3 +38,6 @@ Vue.component(DatePicker.RangePicker.name, DatePicker.RangePicker)
 Vue.component(DatePicker.MonthPicker.name, DatePicker.MonthPicker)
 Vue.component(Alert.name, Alert)
 Vue.component(Icon.name, Icon)
+Vue.use(Spin)
+Vue.prototype.$form = Form
+Vue.prototype.$message = message

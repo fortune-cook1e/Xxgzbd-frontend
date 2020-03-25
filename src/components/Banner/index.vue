@@ -6,13 +6,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-declare function require(img: string): string;
+declare function require(img: string): string
 const bannersrc = require('@/assets/banner.jpg')
 
 @Component
 export default class Banner extends Vue {
   private bannerSrc = bannersrc;
-};
+}
 
 </script>
 

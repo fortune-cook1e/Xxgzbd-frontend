@@ -11,10 +11,10 @@
         </a-tab-pane>
         <a-tab-pane key="3" tab="实时播报" />
         <a-tab-pane key="4" tab="采购填写">
-          <add-goods v-if="currentTab === '1'" />
+          <add-goods v-if="currentTab === '4'" />
         </a-tab-pane>
         <a-tab-pane key="5" tab="采购查询">
-          <goods-list v-if="currentTab === '2'" />
+          <goods-list v-if="currentTab === '5'" />
         </a-tab-pane>
       </a-tabs>
     </div>

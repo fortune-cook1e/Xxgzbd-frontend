@@ -20,6 +20,7 @@ declare module 'dayjs' {
   const dayjs: any
   export default dayjs
 }
-
 declare module 'file-saver'
 declare module 'nprogress'
+declare module 'js-cookie'
+
