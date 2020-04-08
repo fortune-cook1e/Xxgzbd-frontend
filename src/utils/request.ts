@@ -1,6 +1,6 @@
 import { message } from 'ant-design-vue'
 import axios from 'axios'
-import { getToken } from './cookie'
+import { getToken, setToken } from './cookie'
 import router from '@/router'
 
 const baseUrl = process.env.VUE_APP_BASE_URL
@@ -26,9 +26,12 @@ service.interceptors.request.use(config => {
 
 service.interceptors.response.use(response => {
   const { data } = response
+  // 200 才算请求成功 其余都通过弹框的形式报错
   if (data.code !== 200) {
     message.error(data.msg)
+    // 401 代表没授权
     if (data.code === 401) {
+      setToken('', {})
       router.push({
         name: 'login'
       })

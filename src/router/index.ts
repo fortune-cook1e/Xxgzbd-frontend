@@ -10,10 +10,37 @@ export const routes:RouteConfig[] = [
   {
     path: '/home',
     name: 'home',
+    redirect: 'total-data',
     meta: {
       title: '主页'
     },
-    component: () => import('@/views/home/index.vue')
+    component: () => import('@/views/home/index.vue'),
+    children: [
+      // 全部数据概览
+      {
+        path: '/total-data',
+        name: 'totalData',
+        component: () => import('@/views/total-data/index.vue')
+      },
+      // 疫情表格
+      {
+        path: '/area-data',
+        name: 'areaData',
+        component: () => import('@/views/area-data/index.vue')
+      },
+      // 物资填写
+      {
+        path: '/add-goods',
+        name: 'addGoods',
+        component: () => import('@/views/add-goods/index.vue')
+      },
+      // 物资列表
+      {
+        path: '/goods-list',
+        name: 'goodsList',
+        component: () => import('@/views/goods-list/index.vue')
+      }
+    ]
   },
   {
     path: '/login',

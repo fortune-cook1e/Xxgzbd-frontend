@@ -50,6 +50,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { getCityTotalData } from '@/api/city'
 const dayjs = require('dayjs')
 interface TotalItem {
   readonly id: number;
@@ -65,8 +66,37 @@ interface TotalItem {
 }
 @Component
 export default class Total extends Vue {
-  @Prop({ default: () => [] }) private totalItem!: TotalItem
   private time: string = dayjs().format('YYYY-MM-DD hh:mm:ss')
+  private totalList = []
+  private totalItem:TotalItem = {
+    id: 0,
+    cityId: 0,
+    cureNum: 0,
+    susNum: 0,
+    diedNum: 0,
+    sureNum: 0,
+    curingNum: 0,
+    esNum: 0,
+    obNum: 0,
+    cityName: ''
+  }
+
+  // methods
+  // 获取全部数据
+  private async geTotalData() {
+    try {
+      const result = await getCityTotalData()
+      const { data } = result
+      this.totalList = data
+      this.totalItem = data.find((item:any) => item.id === 8)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  private created():void {
+    this.geTotalData()
+  }
 }
 </script>
 

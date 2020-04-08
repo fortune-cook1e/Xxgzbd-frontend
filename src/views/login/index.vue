@@ -74,7 +74,11 @@ export default class Login extends Vue {
   }
 
   private async signUp() {
-
+    try {
+      const result = await UserModule.register(this.form)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 </script>
