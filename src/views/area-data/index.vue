@@ -1,10 +1,12 @@
 <template>
   <div class="table-data">
-    <a-table
-      :columns="columns"
-      :data-source="tableList"
-      :pagination="false"
-    />
+    <a-spin :spinning="loading">
+      <a-table
+        :columns="columns"
+        :data-source="tableList"
+        :pagination="false"
+      />
+    </a-spin>
   </div>
 </template>
 
@@ -20,6 +22,7 @@ interface Column {
 @Component
 export default class TableData extends Vue {
   private dataList = []
+  private loading:boolean = false
 
   private columns = [
     {
@@ -87,11 +90,14 @@ export default class TableData extends Vue {
   // methods
   private async getTableData() {
     try {
+      this.loading = true
       const result = await getCityTotalData()
       const { data } = result
       this.dataList = data
     } catch (e) {
       console.log(e)
+    } finally {
+      this.loading = false
     }
   }
 

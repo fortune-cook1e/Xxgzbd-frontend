@@ -1,30 +1,25 @@
 <template>
   <div class="home">
     <Banner />
-    <div class="tabs">
-      <a-tabs
-        v-model="currentTab"
-        @change="tabChange"
-      >
-        <a-tab-pane
-          v-for="item in tabPanes"
-          :key="item.key"
-          :tab="item.label"
-        >
-          <!-- 渲染的路由 -->
-          <router-view />
-        </a-tab-pane>
-      </a-tabs>
+    <Menu />
+
+    <div class="content">
+      <!-- 路由渲染出口 -->
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
     </div>
   </div>
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
+import Menu from '@/components/Menu/index.vue'
 import Banner from '@/components/Banner/index.vue'
 @Component({
   components: {
-    Banner
+    Banner,
+    Menu
   }
 })
 export default class Home extends Vue {
@@ -50,14 +45,24 @@ export default class Home extends Vue {
   ]
 
   // tab 改变时切换路由
-  private tabChange(key:string):void {
+  private tabClick():void {
     this.$router.push({
-      name: key
+      name: this.currentTab
     })
   }
 }
 </script>
 
 <style lang='scss' scoped>
-
+  .home {
+    .content {
+      padding: 10px 0 0 0;
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+      opacity: 0;
+    }
+  }
 </style>

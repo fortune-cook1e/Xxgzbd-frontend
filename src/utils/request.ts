@@ -10,10 +10,9 @@ const service = axios.create({
   timeout: 3000
 })
 
-const token = getToken()
-
 service.interceptors.request.use(config => {
   // 登录之后会返回一个token 并且将token加在headers里面
+  const token = getToken()
   if (token) {
     config.headers.authorization = 'Bearer ' + token
   }

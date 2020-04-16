@@ -35,7 +35,7 @@
         </a-row>
       </a-form-item>
     </a-form>
-    <a-alert style="margin-bottom:20px" message="表格一共有5列数据，如展示不全请向右滑动表格" banner />
+    <a-alert style="margin-bottom:20px" :message="`表格一共有${total}列数据，如展示不全请向右滑动表格`" banner />
     <a-table
       :columns="columns"
       :loading="loading"
@@ -71,7 +71,7 @@ export default class GoodsList extends Vue {
    listQuery = {
      current: 1,
      pageSize: 100,
-     startDate: dayjs().format('YYYY-MM-DD'),
+     startDate: dayjs(new Date(2020, 1, 1)).format('YYYY-MM-DD'),
      endDate: dayjs().format('YYYY-MM-DD'),
      name: ''
    }

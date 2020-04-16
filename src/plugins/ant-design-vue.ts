@@ -3,6 +3,7 @@ import {
   Pagination,
   Button,
   LocaleProvider,
+  ConfigProvider,
   Tabs,
   Row,
   Col,
@@ -14,8 +15,11 @@ import {
   Alert,
   Icon,
   Spin,
-  message
+  message,
+  FormModel,
+  Menu
 } from 'ant-design-vue'
+console.log(FormModel)
 
 Vue.component(LocaleProvider.name, LocaleProvider)
 Vue.component(Pagination.name, Pagination)
@@ -39,5 +43,8 @@ Vue.component(DatePicker.MonthPicker.name, DatePicker.MonthPicker)
 Vue.component(Alert.name, Alert)
 Vue.component(Icon.name, Icon)
 Vue.use(Spin)
+  .use(ConfigProvider)
+  .use(FormModel)
+  .use(Menu)
 Vue.prototype.$form = Form
 Vue.prototype.$message = message

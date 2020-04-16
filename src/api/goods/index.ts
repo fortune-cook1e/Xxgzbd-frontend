@@ -1,13 +1,5 @@
 import request from '@/utils/request'
-
-interface AddGoodsData {
-  name: string;
-  foodType: Array<number>;
-  foodInfo: string;
-  time: number;
-  phone: string;
-  area: string;
-}
+import { AddGoodsModel } from '@/models/paramsModels'
 
 interface GoodsListParams {
   current: number;
@@ -17,7 +9,7 @@ interface GoodsListParams {
 /**
  * @description 添加物资
  */
-export function addGoods(data: AddGoodsData) {
+export function addGoods(data:AddGoodsModel) {
   return request({
     url: '/goods/add',
     method: 'post',

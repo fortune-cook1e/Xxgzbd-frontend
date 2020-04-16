@@ -4,84 +4,34 @@
       message="填写时间为下午6点到晚上10点"
       banner
     />
-    <a-form
-      ref="infoForm"
-      :form="form"
-      @submit="handleSubmit"
-    >
-      <a-form-item
-        label="姓名"
-      >
-        <a-input
-          v-decorator="['name',{rules: [{required: true, message: '请输入姓名'}]}]"
-          placeholder="您的姓名"
-          allow-clear
-        />
-      </a-form-item>
-
-      <a-form-item
-        label="联系方式"
-      >
-        <a-input
-          v-decorator="['phone',{rules: [{required: true, message: '请输入联系方式'}]}]"
-          placeholder="联系方式"
-          allow-clear
-        />
-      </a-form-item>
-      <a-form-item label="住址">
-        <a-input
-          v-decorator="['area',{rules: [{required: true, message: '请输入详细地址'}]}]"
-          placeholder="住址 例:解放路xxx号xx单元xxx"
-          allow-clear
-        />
-      </a-form-item>
-      <a-form-item label="物品类型">
-        <a-select
-          v-decorator="['foodType',{rules: [{required: false}]}]"
-          mode="multiple"
-          placeholder="选择物资类型 食品/药品"
-          allow-clear
-        >
-          <a-select-option :value="1">
-            食品
-          </a-select-option>
-          <a-select-option :value="2">
-            药品
-          </a-select-option>
+    <a-form-model ref="goodsForm" :model="form" :rules="rules">
+      <a-form-model-item label="姓名" prop="name">
+        <a-input v-model="form.name" />
+      </a-form-model-item>
+      <a-form-model-item label="联系方式" prop="phone">
+        <a-input v-model="form.phone" />
+      </a-form-model-item>
+      <a-form-model-item label="住址" prop="area">
+        <a-input v-model="form.area" />
+      </a-form-model-item>
+      <a-form-model-item label="物品类型" prop="foodType">
+        <a-select v-model="form.foodType" mode="multiple">
+          <a-select-option :value="1">食品</a-select-option>
+          <a-select-option :value="2">药品</a-select-option>
         </a-select>
-      </a-form-item>
-      <a-form-item label="物品详情">
-        <a-textarea
-          v-decorator="['foodInfo',{rules: [{required: false}]}]"
-          allow-clear
-          placeholder="您需要的物品"
-          :rows="6"
-        />
-      </a-form-item>
-      <a-form-item>
-        <a-row>
-          <a-col :span="5">
-            <a-button
-              html-type="submit"
-              type="primary"
-            >
-              提交
-            </a-button>
-          </a-col>
-          <a-col
-            :span="5"
-            :offset="1"
-          >
-            <a-button
-              type="default"
-              @click="resetForm"
-            >
-              重新填写
-            </a-button>
-          </a-col>
-        </a-row>
-      </a-form-item>
-    </a-form>
+      </a-form-model-item>
+      <a-form-model-item label="物品详情" prop="foodInfo">
+        <a-textarea v-model="form.foodInfo" :rows="6" />
+      </a-form-model-item>
+      <a-form-model-item>
+        <a-button type="primary" @click="handleSubmit">
+          提交
+        </a-button>
+        <a-button type="default" @click="resetForm">
+          重置
+        </a-button>
+      </a-form-model-item>
+    </a-form-model>
   </div>
 </template>
 
@@ -89,6 +39,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { addGoods } from '@/api/goods'
 import { message } from 'ant-design-vue'
+import { AddGoodsModel } from '@/models/paramsModels'
 import dayjs from 'dayjs'
 interface Form {
   name: string;
@@ -100,27 +51,50 @@ interface Form {
 }
 @Component
 export default class AddGoods extends Vue {
-  private form = {
+  private form:AddGoodsModel = {
     name: '',
-    foodType: [1],
+    foodType: [],
     foodInfo: '',
-    time: '',
+    time: dayjs().format('YYYY-MM-DD'),
     phone: '',
     area: ''
   }
 
-  private resetForm() {
-    (this.form as any).resetFields()
+  private rules = {
+    name: [
+      { required: true, message: 'Please input your name', trigger: 'blur' }
+    ],
+    foodType: [
+      { required: true, message: 'Please select food type', trigger: 'change' }
+    ],
+    foodInfo: [
+      { required: true, message: 'Please input your food info', trigger: 'blur' }
+    ],
+    phone: [
+      { required: true, message: 'Phone number', trigger: 'blur' }
+    ],
+    area: [
+      { required: true, message: 'Please input your home address', trigger: 'blur' }
+    ]
   }
 
-  async handleSubmit(e:any) {
+  // methods
+  private resetForm() {
+    (this.$refs.goodsForm as any).resetFields()
+  }
+
+  private handleSubmit(e:any) {
     e.preventDefault()
     try {
-      (this.form as any).validateFields(async(err:any, values:any) => {
-        if (!err) {
-          const form = Object.assign({}, values, { time: dayjs().format('YYYY-MM-DD') })
+      const form = Object.assign({}, this.form);
+      (this.$refs.goodsForm as any).validate(async(valid:boolean) => {
+        if (valid) {
           await addGoods(form)
-          message.success('提交成功')
+          this.$message.success('提交成功')
+          console.log('successs')
+        } else {
+          console.log('submit error')
+          return false
         }
       })
     } catch (e) {

@@ -1,11 +1,11 @@
 <template>
-  <a-locale-provider :locale="zhCN">
+  <a-config-provider :locale="zhCN">
     <div id="app">
       <transition name="fade">
         <router-view />
       </transition>
     </div>
-  </a-locale-provider>
+  </a-config-provider>
 </template>
 
 <script>

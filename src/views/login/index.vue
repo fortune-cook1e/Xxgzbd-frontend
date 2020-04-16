@@ -12,16 +12,16 @@
           <h3 class="login-title">
             账号密码登录
           </h3>
-          <a-form>
-            <a-form-item>
+          <a-form-model ref="form" :model="form" :rules="rules">
+            <a-form-model-item prop="username">
               <a-input
                 v-model="form.username"
                 placeholder="Username"
               >
-                <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
+                <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
               </a-input>
-            </a-form-item>
-            <a-form-item>
+            </a-form-model-item>
+            <a-form-model-item prop="password">
               <a-input
                 v-model="form.password"
                 type="password"
@@ -29,18 +29,16 @@
               >
                 <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
               </a-input>
-            </a-form-item>
-            <a-form-item>
-              <a-row type="flex" justify="space-between">
-                <a-col :span="8">
-                  <a-button type="primary" class="form-btn" @click="login">Login</a-button>
-                </a-col>
-                <a-col :span="8">
-                  <a-button type="default" class="form-btn" @click="signUp">Sign In</a-button>
-                </a-col>
-              </a-row>
-            </a-form-item>
-          </a-form>
+            </a-form-model-item>
+            <a-form-model-item :wrapper-col="{ span: 14, offset: 0 }">
+              <a-button type="primary" @click="login">
+                Login
+              </a-button>
+              <a-button type="default" style="margin-left:10px" @click="signUp">
+                Sign Up
+              </a-button>
+            </a-form-model-item>
+          </a-form-model>
         </div>
       </div>
     </a-spin>
@@ -52,6 +50,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { UserModule } from '@/store/modules/user.ts'
 import { LoginModel } from '@/models/paramsModels.ts'
 import { message } from 'ant-design-vue'
+import { setToken, getToken } from '@/utils/cookie'
 @Component({})
 export default class Login extends Vue {
   private form: LoginModel = {
@@ -59,14 +58,32 @@ export default class Login extends Vue {
     password: ''
   }
 
+  private rules = {
+    username: [
+      { required: true, message: 'Please input your username', trigger: 'blur' },
+      { min: 6, max: 12, message: 'Length shoule be  6 to 12', trigger: 'blur' }
+    ],
+    password: [
+      { required: true, message: 'Please input your password', trigger: 'blur' },
+      { min: 6, message: 'Password shoule be greater then 6', trigger: 'blur' }
+    ]
+  }
+
   private loading: boolean = false
 
   // methods
-  private async login(e: any) {
+  private async login() {
     try {
-      await UserModule.login(this.form)
-      this.$router.push({
-        name: 'home'
+      (this.$refs.form as any).validate(async(valid:any) => {
+        if (valid) {
+          await UserModule.login(this.form)
+          this.$router.push({
+            name: 'home'
+          })
+        } else {
+          console.log('submit error')
+          return false
+        }
       })
     } catch (e) {
       console.log(e)
@@ -76,6 +93,8 @@ export default class Login extends Vue {
   private async signUp() {
     try {
       const result = await UserModule.register(this.form)
+      const { msg } = result as any
+      message.info(msg)
     } catch (e) {
       console.log(e)
     }
