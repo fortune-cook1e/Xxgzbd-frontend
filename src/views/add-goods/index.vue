@@ -1,9 +1,6 @@
 <template>
   <div class="add-goods">
-    <a-alert
-      message="填写时间为下午6点到晚上10点"
-      banner
-    />
+    <a-alert message="填写时间为下午6点到晚上10点" banner />
     <a-form-model ref="goodsForm" :model="form" :rules="rules">
       <a-form-model-item label="姓名" prop="name">
         <a-input v-model="form.name" />
@@ -24,23 +21,21 @@
         <a-textarea v-model="form.foodInfo" :rows="6" />
       </a-form-model-item>
       <a-form-model-item>
-        <a-button type="primary" @click="handleSubmit">
-          提交
-        </a-button>
-        <a-button type="default" @click="resetForm">
-          重置
-        </a-button>
+        <a-button type="primary" @click="handleSubmit">提交</a-button>
+        <a-button type="default" @click="resetForm">重置</a-button>
       </a-form-model-item>
     </a-form-model>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { addGoods } from '@/api/goods'
-import { message } from 'ant-design-vue'
-import { AddGoodsModel } from '@/models/paramsModels'
-import dayjs from 'dayjs'
+import { Component, Vue } from "vue-property-decorator";
+// @ts-ignore
+import { addGoods } from "@/api/goods";
+import { message } from "ant-design-vue";
+// @ts-ignore
+import { AddGoodsModel } from "@/models/paramsModels";
+import dayjs from "dayjs";
 interface Form {
   name: string;
   foodType: Array<number>;
@@ -51,62 +46,68 @@ interface Form {
 }
 @Component
 export default class AddGoods extends Vue {
-  private form:AddGoodsModel = {
-    name: '',
+  private form: AddGoodsModel = {
+    name: "",
     foodType: [],
-    foodInfo: '',
-    time: dayjs().format('YYYY-MM-DD'),
-    phone: '',
-    area: ''
-  }
+    foodInfo: "",
+    time: dayjs().format("YYYY-MM-DD"),
+    phone: "",
+    area: ""
+  };
 
   private rules = {
     name: [
-      { required: true, message: 'Please input your name', trigger: 'blur' }
+      { required: true, message: "Please input your name", trigger: "blur" }
     ],
     foodType: [
-      { required: true, message: 'Please select food type', trigger: 'change' }
+      { required: true, message: "Please select food type", trigger: "change" }
     ],
     foodInfo: [
-      { required: true, message: 'Please input your food info', trigger: 'blur' }
+      {
+        required: true,
+        message: "Please input your food info",
+        trigger: "blur"
+      }
     ],
-    phone: [
-      { required: true, message: 'Phone number', trigger: 'blur' }
-    ],
+    phone: [{ required: true, message: "Phone number", trigger: "blur" }],
     area: [
-      { required: true, message: 'Please input your home address', trigger: 'blur' }
+      {
+        required: true,
+        message: "Please input your home address",
+        trigger: "blur"
+      }
     ]
-  }
+  };
 
   // methods
   private resetForm() {
-    (this.$refs.goodsForm as any).resetFields()
+    (this.$refs.goodsForm as any).resetFields();
   }
 
-  private handleSubmit(e:any) {
-    e.preventDefault()
+  private handleSubmit(e: any) {
+    e.preventDefault();
     try {
       const form = Object.assign({}, this.form);
-      (this.$refs.goodsForm as any).validate(async(valid:boolean) => {
+      (this.$refs.goodsForm as any).validate(async (valid: boolean) => {
         if (valid) {
-          await addGoods(form)
-          this.$message.success('提交成功')
-          console.log('successs')
+          await addGoods(form);
+          this.$message.success("提交成功");
+          console.log("successs");
         } else {
-          console.log('submit error')
-          return false
+          console.log("submit error");
+          return false;
         }
-      })
+      });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .add-goods {
-    width: 80%;
-    margin: 0 auto;
-  }
+.add-goods {
+  width: 80%;
+  margin: 0 auto;
+}
 </style>
